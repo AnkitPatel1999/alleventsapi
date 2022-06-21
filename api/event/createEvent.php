@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 
 error_reporting(E_ALL);
@@ -23,10 +24,11 @@ $db = $database->connect();
 
 $event = new Event($db);
 $data = json_decode(file_get_contents("php://input"));
+
 if(count($_POST)){
     
     $params = [
-        'userId'=> "555",
+        'userEmail'=> "555",
         'eventName'=> $_POST['eventName'],
         'description'=> $_POST['description'],
         'eventDate'=> $_POST['eventDate'],
@@ -46,7 +48,7 @@ if(count($_POST)){
 else if(isset($data)){
 
     $params = [
-        'userId'=>  "555",
+        'userEmail'=>  "ankitpatelas90@gmail.com",
         'eventName'=>  $data->eventName,
         'description'=>  $data->description,
         'eventDate'=>  $data->eventDate,

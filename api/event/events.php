@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 
 error_reporting(E_ALL);
@@ -35,7 +36,7 @@ if($data->rowCount())
 
         $events[]=[
            'eventId' => $row->eventId,
-           'userId' => $row->userId,
+           'userEmail' => $row->userEmail,
            'eventName' => $row->eventName,
            'description' => $row->description,
            'eventDate' => $row->eventDate,
@@ -49,9 +50,6 @@ if($data->rowCount())
 
     }
     echo json_encode($events,JSON_INVALID_UTF8_IGNORE);
-
-
-
 } else {
     echo json_encode(['message'=>'no events founds']);
 }

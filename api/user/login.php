@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 
 error_reporting(E_ALL);
@@ -27,7 +28,6 @@ $user = new User($db);
     $token = json_decode(file_get_contents('php://input'), true);
     $gClient = new Google_Client();
     $gClient->setAccessToken($token['access_token']);
-    $_SESSION['access_token'] = $token['access_token'];
     $google_service = new Google_Service_Oauth2($gClient);
     $data = $google_service->userinfo->get();
 
@@ -43,6 +43,8 @@ if(isset($data)){
     
     if($user->createUser($params))
     {
+        $_SESSION['access_token'] = $token['access_token'];
+        $_SESSION['name'] = $data['email'];
         echo json_encode(array('message' => 'Login successfully','name'=>$data['name'],'picture'=>$data['picture']));
     }
 

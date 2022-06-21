@@ -8,7 +8,7 @@ class Event{
 
     // event property
     public $eventId;
-    public $userId;
+    public $userEmail;
     public $eventName;
     public $description;
     public $eventDate;
@@ -33,9 +33,8 @@ class Event{
     public function getEvents(){
 
         $query ='SELECT 
-        users.name as users,
         events.eventId,
-        events.userId,
+        events.userEmail,
         events.eventName,
         events.description,
         events.eventDate,
@@ -45,8 +44,7 @@ class Event{
         events.category,
         events.bannerPicture,
         events.created_at
-        FROM '.$this->table.' events LEFT JOIN 
-        users ON events.userId = users.id
+        FROM '.$this->table.' events 
         ORDER BY 
         events.created_at ASC
          ';
@@ -61,7 +59,7 @@ class Event{
     public function createEvent($params){
         try {
             
-            $this->userId = $params['userId'];
+            $this->userEmail = $params['userEmail'];
             $this->eventName = $params['eventName'];
             $this->description = $params['description'];
             $this->eventDate = $params['eventDate'];
@@ -74,7 +72,7 @@ class Event{
 
             $query = 'INSERT INTO '.$this->table.' 
                     SET 
-                    userId = :userId,
+                    userEmail = :userEmail,
                     eventName = :eventName,
                     eventDate = :eventDate,
                     description = :description,
@@ -85,11 +83,11 @@ class Event{
                     bannerPicture = :bannerPicture,
                     created_at = :created_at';
                     
-            // $query2 = 'INSERT INTO events (eventId, userId, eventName, eventDate,startTime,endTime,category,created_at  ) 
-            // VALUES (:eventId, :userId, :eventName, :eventDate,:startTime ,:endTime ,:category ,:created_at)';
+            // $query2 = 'INSERT INTO events (eventId, userEmail, eventName, eventDate,startTime,endTime,category,created_at  ) 
+            // VALUES (:eventId, :userEmail, :eventName, :eventDate,:startTime ,:endTime ,:category ,:created_at)';
 
             $event = $this->connection->prepare($query);
-            $event->bindValue('userId',$this->userId);
+            $event->bindValue('userEmail',$this->userEmail);
             $event->bindValue('eventName',$this->eventName);
             $event->bindValue('description',$this->description);
             $event->bindValue('eventDate',$this->eventDate);

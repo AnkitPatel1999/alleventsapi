@@ -1,6 +1,5 @@
 <?php 
 
-
 class Database{
     //db properties
     private $host = 'localhost';
